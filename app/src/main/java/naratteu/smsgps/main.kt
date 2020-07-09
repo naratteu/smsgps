@@ -33,14 +33,14 @@ class main : BroadcastReceiver() {
             //퍼미션이 둘중 하나라도 있을경우
             if (ActivityCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION  ) == PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
-                try {
-                    val locationManager = ctx.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
-                    val loc : Location? = locationManager!!.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-                    val lat : Double = loc!!.latitude;
-                    val lon : Double = loc!!.longitude;
-                    val d = "https://www.google.com/maps/dir//$lat,$lon/"//"lat : $lat \nlon :  $lon"
-                    sendSMS(sm.originatingAddress, d)//sm.messageBody)
-                } catch (e : Exception) {
+                //try {
+                //    val locationManager = ctx.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
+                //    val loc : Location? = locationManager!!.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                //    val lat : Double = loc!!.latitude;
+                //    val lon : Double = loc!!.longitude;
+                //    val d = "첫번째 https://www.google.com/maps/place/$lat,$lon/"//"lat : $lat \nlon :  $lon"
+                //    sendSMS(sm.originatingAddress, d)//sm.messageBody)
+                //} catch (e : Exception) {
                     val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(ctx)
                     //fusedLocationClient.requestLocationUpdates()//이거쓰면 정기적으로 수신받을수 있음.
                     fusedLocationClient.lastLocation.addOnSuccessListener { location : Location? ->
@@ -50,13 +50,13 @@ class main : BroadcastReceiver() {
                         val loc : Location = (location as Location)
                         val lat : Double = loc.latitude;
                         val lon : Double = loc.longitude;
-                        val d = "https://www.google.com/maps/dir//$lat,$lon/"//"lat : $lat \nlon :  $lon"
+                        val d = "마지막위치 https://www.google.com/maps/place/$lat,$lon/"//"lat : $lat \nlon :  $lon"
                         sendSMS(sm.originatingAddress, d)//sm.messageBody)
 
                         //https://www.google.com/maps/dir//37.4810151,126.8829085/
                         //일케 보내
                     }
-                }
+                //}
             }
         }
     }
